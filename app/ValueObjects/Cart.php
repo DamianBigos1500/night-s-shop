@@ -39,36 +39,36 @@ class Cart
     });
   }
 
-  public function addItem(Product $product): Cart
+  public function addItem(int $productId, int $quantity = 1): Cart
   {
     $items = $this->items;
-    $item = $items->first($this->isProductIdSameAsItemProduct($product));
+    $item = $items->first($this->isProductIdSameAsItemProduct($productId));
 
     if (!is_null($item)) {
-      $items = $this->removeItemFromCollection($this->items, $product);
-      $newItem = $item->addQuantity($product);
+      $items = $this->removeItemFromCollection($this->items, $productId);
+      $newItem = $item->changeQuantity($productId, $quantity);
     } else {
-      $newItem = new CartItem($product);
+      $newItem = new CartItem($productId, $quantity);
     }
     $items->add($newItem);
     return new Cart($items);
   }
 
-  public function removeItem(Product $product): Cart
+  public function removeItem(int $productId): Cart
   {
-    $items = $this->removeItemFromCollection($this->items, $product);
+    $items = $this->removeItemFromCollection($this->items, $productId);
     return new Cart($items);
   }
 
-  private function removeItemFromCollection(Collection $items, Product $product): Collection
+  private function removeItemFromCollection(Collection $items, int $productId): Collection
   {
-    return $items->reject($this->isProductIdSameAsItemProduct($product));
+    return $items->reject($this->isProductIdSameAsItemProduct($productId));
   }
 
-  private function isProductIdSameAsItemProduct(Product $product): Closure
+  private function isProductIdSameAsItemProduct(int $productId): Closure
   {
-    return function ($item) use ($product) {
-      return $product->id == $item->getProductId();
+    return function ($item) use ($productId) {
+      return $productId == $item->getProductId();
     };
   }
 }

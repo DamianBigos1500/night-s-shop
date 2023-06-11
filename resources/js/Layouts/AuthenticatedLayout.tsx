@@ -29,6 +29,51 @@ export default function Authenticated({ user, header, children }: any) {
                                     Dashboard
                                 </NavLink>
                             </div>
+
+                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink
+                                    href={route("product.index")}
+                                    active={route().current("product")}
+                                >
+                                    Product
+                                </NavLink>
+                            </div>
+
+                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink
+                                    href={route("attribute.index")}
+                                    active={route().current("product")}
+                                >
+                                    Attribute
+                                </NavLink>
+                            </div>
+
+                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink
+                                    href={route("attribute-value.index")}
+                                    active={route().current("product")}
+                                >
+                                    Attribute Value
+                                </NavLink>
+                            </div>
+
+                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink
+                                    href={route("product-variant.index")}
+                                    active={route().current("product")}
+                                >
+                                    Product Variant
+                                </NavLink>
+                            </div>
+
+                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink
+                                    href={route("sku.index")}
+                                    active={route().current("product")}
+                                >
+                                    Sku
+                                </NavLink>
+                            </div>
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ml-6">

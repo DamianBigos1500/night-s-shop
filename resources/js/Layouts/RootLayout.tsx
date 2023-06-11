@@ -15,9 +15,20 @@ const RootLayout: FC<RootLayoutProps> = ({ children }) => {
             <div className="space-x-10">
                 <Link href={route("index")}>home</Link>
                 <Link href={route("products")}>products</Link>
-                <Link href={route("register")}>register</Link>
-                <Link href={route("login")}>login</Link>
-                <span>{auth?.user?.name}</span>
+                {auth?.user ? (
+                    <>
+                        <Link href={route("dashboard")}>dashboard</Link>
+                        <Link href={route("logout")} method="post">
+                            logout
+                        </Link>
+                        <span>{auth?.user?.name}</span>
+                    </>
+                ) : (
+                    <>
+                        <Link href={route("register")}>register</Link>
+                        <Link href={route("login")}>login</Link>
+                    </>
+                )}
                 <span>{cart?.id}</span>
             </div>
             {children}

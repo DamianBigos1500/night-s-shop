@@ -13,7 +13,7 @@ const Index: FC<IndexProps> = ({ products }) => {
             <div>
                 {products?.data?.map((product: any) => (
                     <div key={product.id}>
-                        <Link href={route("products", product.id)}>
+                        <Link href={"/products" + "/" + product.id}>
                             {product.id} {product.name}
                         </Link>
                     </div>

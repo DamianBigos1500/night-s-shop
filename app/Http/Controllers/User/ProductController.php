@@ -81,7 +81,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        return Inertia::render('User/Product/Show', ['products' => $product]);
+        return Inertia::render('User/Product/Show', ['product' => $product]);
     }
 
     /**

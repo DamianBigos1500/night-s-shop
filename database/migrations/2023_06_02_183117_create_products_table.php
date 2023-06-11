@@ -17,18 +17,11 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string("name", 512);
-            $table->string("slug", 512)->unique();
-            $table->string("code", 256);
             $table->text("short_description");
             $table->text("description");
-            $table->decimal("regular_price");
-            $table->decimal("sale_price")->nullable();
-            $table->enum("stock_status", StockStatus::TYPES)->default(StockStatus::IN_STOCK);
-            $table->integer("quantity");
-            $table->boolean("featured")->default(false);
-            $table->softDeletes();
             $table->foreignIdFor(Category::class)->nullable();
             $table->foreignIdFor(User::class, 'deleted_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

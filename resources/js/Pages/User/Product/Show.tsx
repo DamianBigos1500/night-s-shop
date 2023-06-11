@@ -1,9 +1,12 @@
+import RootLayout from "@/Layouts/RootLayout";
 import { FC } from "react";
 
-interface ShowProps {}
+interface ShowProps {
+    product: any;
+}
 
-const Show: FC<ShowProps> = ({}) => {
-    return <div>Show</div>;
+const Show: FC<ShowProps> = ({ product }) => {
+    return <RootLayout>{product.name}</RootLayout>;
 };
 
 export default Show;

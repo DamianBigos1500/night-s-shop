@@ -1,10 +1,6 @@
 import { useEffect } from "react";
-import GuestLayout from "@/Layouts/GuestLayout";
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
 import { Head, useForm } from "@inertiajs/react";
+import RootLayout from "@/Layouts/RootLayout";
 
 export default function ConfirmPassword() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -19,12 +15,11 @@ export default function ConfirmPassword() {
 
     const submit = (e: any) => {
         e.preventDefault();
-
         post(route("password.confirm"));
     };
 
     return (
-        <GuestLayout>
+        <RootLayout>
             <Head title="Confirm Password" />
 
             <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
@@ -34,29 +29,28 @@ export default function ConfirmPassword() {
 
             <form onSubmit={submit}>
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <label htmlFor="password">Password</label>
 
-                    <TextInput
+                    <input
                         id="password"
                         type="password"
                         name="password"
                         value={data.password}
                         className="mt-1 block w-full"
-                        isFocused={true}
                         onChange={(e: any) =>
                             setData("password", e.target.value)
                         }
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    {/* <InputError message={errors.password} className="mt-2" /> */}
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    <PrimaryButton className="ml-4" disabled={processing}>
+                    <button className="ml-4" disabled={processing}>
                         Confirm
-                    </PrimaryButton>
+                    </button>
                 </div>
             </form>
-        </GuestLayout>
+        </RootLayout>
     );
 }

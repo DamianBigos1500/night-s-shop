@@ -1,34 +1,40 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\IndexController;
 use App\Http\Controllers\User\ProductController;
-use Illuminate\Foundation\Application;
+use App\Models\Sku;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::get('/sku/{id}', function (int $id, Request $request) {
+
+    $sku = Sku::with(['product', 'product.productVariants.attributes',  'product.productVariants.attributeValues', 'attributeValues'])->find($id);
+    // $skuAttr = DB::table('attribute_sku')->where(['sku_id' => 1])->get();
+    $skus = Sku::with(['attributeValues'])->where(['product_id' => $sku->product->id])->get();
+
+    // return response()->json([
+    //     'sku' => $sku,
+    //     'skus' => $skus,
+    // ]);
+
+    return Inertia::render('Details', [
+        'sku' => $sku,
+        'skus' => $skus,
+    ]);
 });
 
 

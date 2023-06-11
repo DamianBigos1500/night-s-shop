@@ -3,23 +3,21 @@
 
 namespace App\ValueObjects;
 
-use App\Models\Product;
-
 class CartItem
 {
-  private int $productId;
+  private int $product_id;
   private int $quantity = 0;
 
 
-  public function __construct(Product $product, int $quantity = 1)
+  public function __construct(int $productId, int $quantity = 1)
   {
-    $this->productId = $product->id;
+    $this->product_id = $productId;
     $this->quantity += $quantity;
   }
 
   public function getProductId(): int
   {
-    return $this->productId;
+    return $this->product_id;
   }
 
   public function getQuantity(): int
@@ -33,8 +31,8 @@ class CartItem
     // return $this->price * $this->quantity;
   }
 
-  public function addQuantity(Product $productId): CartItem
+  public function changeQuantity(int $productId, int $quantity = 1): CartItem
   {
-    return new CartItem($productId, ++$this->quantity);
+    return new CartItem($productId, $quantity);
   }
 }
